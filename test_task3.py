@@ -9,10 +9,6 @@ HOST = "test.rebex.net"
 USERNAME = "demo"
 PASSWORD = "password"
 
-
-# ---------------------------------
-# Paramiko SSH connection
-# ---------------------------------
 def ssh_paramiko(command):
 
     print("\nRunning using Paramiko:", command)

@@ -1,0 +1,25 @@
+*pipeline {
+    agent any
+
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+        stage('Script Execution') {
+            echo"Running the scripts based on user input"
+            if (${ALL_TEST} == true)
+                {
+                    sh '''
+
+                }
+
+            else if (${ALL_TEST} == false)
+                {
+                cd home/user/scripts  
+                py.test -s v -W ignore ${SCRIPT}
+                }
+        }
+    }
+}

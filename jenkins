@@ -2,9 +2,29 @@ pipeline {
     agent any
 
     stages {
-        stage('Hello') {
+        stage('Script Execution') {
             steps {
-                echo 'Hello World'
+                script {
+                    echo "Starting execution..."
+
+                    if (params.ALL_TEST) {
+                        echo "Running all scripts..."
+
+                        sh """
+                        cd /home/user/scripts
+                        for file in *.py; do
+                            echo "Running \$file"
+                            python3 \$file
+                        done
+                        """
+                    } else {
+                        echo "Running selected script: ${params.SCRIPT_CHOICE}"
+
+                        sh """
+                        python3 ${params.SCRIPT_CHOICE}
+                        """
+                    }
+                }
             }
         }
     }
