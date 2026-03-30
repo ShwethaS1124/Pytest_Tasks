@@ -10,8 +10,9 @@ pipeline {
 
         stage('Verify Python') {
             steps {
-                bat 'python --version'
-                bat 'where python'
+                bat """
+                "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python311\\python.exe" --version
+                """
             }
         }
 
@@ -27,7 +28,7 @@ pipeline {
                         cd /d "%WORKSPACE%"
                         for %%f in (*.py) do (
                             echo Running %%f
-                            python %%f
+                            "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python311\\python.exe" %%f
                         )
                         """
                     } else {
@@ -35,7 +36,7 @@ pipeline {
 
                         bat """
                         cd /d "%WORKSPACE%"
-                        python "${params.SCRIPT}"
+                        "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python311\\python.exe" "${params.SCRIPT}"
                         """
                     }
                 }
