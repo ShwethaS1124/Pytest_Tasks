@@ -1,7 +1,20 @@
 pipeline {
     agent any
 
+    parameters {
+        booleanParam(name: 'ALL_TEST', defaultValue: true, description: 'Run all tests')
+        string(name: 'SCRIPT', defaultValue: '', description: 'Run specific script')
+    }
+
     stages {
+
+        stage('Verify Python') {
+            steps {
+                bat 'python --version'
+                bat 'where python'
+            }
+        }
+
         stage('Script Execution') {
             steps {
                 script {
@@ -11,7 +24,7 @@ pipeline {
                         echo "Running all scripts..."
 
                         bat """
-                        cd /d "C:\\Users\\User Temp.EURLTP-337\\Desktop\\PyTest"
+                        cd /d "%WORKSPACE%"
                         for %%f in (*.py) do (
                             echo Running %%f
                             python %%f
@@ -21,6 +34,7 @@ pipeline {
                         echo "Running selected script: ${params.SCRIPT}"
 
                         bat """
+                        cd /d "%WORKSPACE%"
                         python "${params.SCRIPT}"
                         """
                     }
