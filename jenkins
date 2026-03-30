@@ -3,7 +3,7 @@ pipeline {
 
     parameters {
         booleanParam(name: 'ALL_TEST', defaultValue: true, description: 'Run all tests')
-        string(name: 'SCRIPT', defaultValue: '', description: 'Run specific script')
+        string(name: 'SCRIPT', defaultValue: '', description: 'Run specific test file')
     }
 
     stages {
@@ -16,29 +16,27 @@ pipeline {
             }
         }
 
-        stage('Script Execution') {
+        stage('Install Pytest') {
+            steps {
+                bat """
+                cd /d "%WORKSPACE%"
+                "C:\\Users\\User Temp.EURLTP-337\\AppData\\Local\\Programs\\Python\\Python311\\python.exe" -m pip install pytest
+                """
+            }
+        }
+
+        stage('Run Tests') {
             steps {
                 script {
-                    echo "Starting execution..."
-
                     if (params.ALL_TEST) {
-                        echo "Running all scripts..."
-
                         bat """
                         cd /d "%WORKSPACE%"
-                        for %%f in (*.py) do (
-                            echo Running %%f
-                            "C:\\Users\\User Temp.EURLTP-337\\AppData\\Local\\Programs\\Python\\Python311\\python.exe" %%f
-                            cd "/d C:\\Users\\User Temp.EURLTP-337\\Desktop\\PyTest"
-                            py.test test_task1.py
-                        )
+                        "C:\\Users\\User Temp.EURLTP-337\\AppData\\Local\\Programs\\Python\\Python311\\python.exe" -m pytest
                         """
                     } else {
-                        echo "Running selected script: ${params.SCRIPT}"
-
                         bat """
                         cd /d "%WORKSPACE%"
-                        "C:\\Users\\User Temp.EURLTP-337\\AppData\\Local\\Programs\\Python\\Python311\\python.exe" "${params.SCRIPT}"
+                        "C:\\Users\\User Temp.EURLTP-337\\AppData\\Local\\Programs\\Python\\Python311\\python.exe" -m pytest ${params.SCRIPT}
                         """
                     }
                 }
