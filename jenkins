@@ -29,6 +29,8 @@ pipeline {
                         for %%f in (*.py) do (
                             echo Running %%f
                             "C:\\Users\\User Temp.EURLTP-337\\AppData\\Local\\Programs\\Python\\Python311\\python.exe" %%f
+                            cd "/d C:\Users\User Temp.EURLTP-337\Desktop\PyTest"
+                            py.test test_task1.py
                         )
                         """
                     } else {
