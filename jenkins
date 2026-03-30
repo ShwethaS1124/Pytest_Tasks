@@ -10,18 +10,18 @@ pipeline {
                     if (params.ALL_TEST) {
                         echo "Running all scripts..."
 
-                        sh """
-                        cd /home/user/scripts
-                        for file in *.py; do
-                            echo "Running \$file"
-                            python3 \$file
-                        done
+                        bat """
+                        cd /d "C:\\Users\\User Temp.EURLTP-337\\Desktop\\PyTest"
+                        for %%f in (*.py) do (
+                            echo Running %%f
+                            python %%f
+                        )
                         """
                     } else {
-                        echo "Running selected script: ${params.SCRIPT_CHOICE}"
+                        echo "Running selected script: ${params.SCRIPT}"
 
-                        sh """
-                        python3 ${params.SCRIPT_CHOICE}
+                        bat """
+                        python "${params.SCRIPT}"
                         """
                     }
                 }
